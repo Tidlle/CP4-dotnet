@@ -316,12 +316,3 @@ curl http://localhost:5121/api/health/live
 
 ---
 
-## 7. Roteiro sugerido para a apresentação (5 min)
-
-1. **Arquitetura** — mostrar as pastas `Domain / Application / Infrastructure / Presentation` e o `Bootstrap.AddIoC` ligando interface e implementação.
-2. **Swagger** — `/swagger`, com as descrições e os exemplos vindos das annotations.
-3. **Paginação** — `GET /api/jogo?PageNumber=2&PageSize=5` mostrando `totalRegistros` e `totalPaginas`; abrir a migration `InitDb` e apontar os `CreateIndex`.
-4. **Regra de negócio** — desconto de 25% (200) e de 95% (400).
-5. **Rate limiting** — repetir a listagem 6 vezes até o **429**.
-6. **Observabilidade** — `/api/health/live`, `/api/health/db`, os logs no console e o painel do Application Insights.
-7. **Testes** — `dotnet test` com os 55 testes aprovados.
