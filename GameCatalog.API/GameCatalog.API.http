@@ -1,0 +1,151 @@
+@GameCatalog.API_HostAddress = http://localhost:5121
+
+### Health check - liveness
+GET {{GameCatalog.API_HostAddress}}/api/health/live
+Accept: application/json
+
+### Health check - banco de dados Oracle
+GET {{GameCatalog.API_HostAddress}}/api/health/db
+Accept: application/json
+
+### Cadastrar estudio 1
+POST {{GameCatalog.API_HostAddress}}/api/estudio
+Content-Type: application/json
+
+{
+  "nome": "Pixel Forge Studios",
+  "pais": "Brasil",
+  "anoFundacao": 2011,
+  "ativo": true
+}
+
+### Cadastrar estudio 2
+POST {{GameCatalog.API_HostAddress}}/api/estudio
+Content-Type: application/json
+
+{
+  "nome": "Northern Lights Games",
+  "pais": "Suecia",
+  "anoFundacao": 1998,
+  "ativo": true
+}
+
+### Cadastrar estudio 3 com jogos no mesmo request
+POST {{GameCatalog.API_HostAddress}}/api/estudio
+Content-Type: application/json
+
+{
+  "nome": "Sakura Interactive",
+  "pais": "Japao",
+  "anoFundacao": 1987,
+  "ativo": true,
+  "jogos": [
+    {
+      "titulo": "Chronicles of Aether",
+      "genero": "Rpg",
+      "preco": 199.90,
+      "dataLancamento": "2020-02-15T00:00:00",
+      "nota": 9.1
+    },
+    {
+      "titulo": "Deep Harbor",
+      "genero": "Aventura",
+      "preco": 89.90,
+      "dataLancamento": "2019-08-01T00:00:00",
+      "nota": 7.8
+    }
+  ]
+}
+
+### Cadastrar estudio com ano invalido (regra de negocio - 400)
+POST {{GameCatalog.API_HostAddress}}/api/estudio
+Content-Type: application/json
+
+{
+  "nome": "Estudio Invalido",
+  "pais": "Brasil",
+  "anoFundacao": 1800
+}
+
+### Listar estudios paginados
+GET {{GameCatalog.API_HostAddress}}/api/estudio?PageNumber=1&PageSize=10
+Accept: application/json
+
+### Listar estudios com busca
+GET {{GameCatalog.API_HostAddress}}/api/estudio?PageNumber=1&PageSize=10&Busca=Sakura
+Accept: application/json
+
+### Obter um estudio com os jogos
+GET {{GameCatalog.API_HostAddress}}/api/estudio/1
+Accept: application/json
+
+### Cadastrar jogo
+POST {{GameCatalog.API_HostAddress}}/api/jogo
+Content-Type: application/json
+
+{
+  "titulo": "Neon Drift",
+  "genero": "Acao",
+  "preco": 149.90,
+  "dataLancamento": "2021-05-10T00:00:00",
+  "nota": 8.5,
+  "estudioId": 1,
+  "plataformas": [
+    { "nome": "PC" },
+    { "nome": "PlayStation 5" }
+  ]
+}
+
+### Cadastrar jogo com estudio inexistente (404)
+POST {{GameCatalog.API_HostAddress}}/api/jogo
+Content-Type: application/json
+
+{
+  "titulo": "Jogo Sem Estudio",
+  "genero": "Acao",
+  "preco": 100,
+  "dataLancamento": "2023-01-01T00:00:00",
+  "estudioId": 9999
+}
+
+### Listar jogos paginados
+GET {{GameCatalog.API_HostAddress}}/api/jogo?PageNumber=1&PageSize=5
+Accept: application/json
+
+### Listar jogos filtrando por genero
+GET {{GameCatalog.API_HostAddress}}/api/jogo?PageNumber=1&PageSize=10&Genero=Rpg
+Accept: application/json
+
+### Listar jogos de um estudio
+GET {{GameCatalog.API_HostAddress}}/api/jogo?PageNumber=1&PageSize=10&EstudioId=1
+Accept: application/json
+
+### Aplicar desconto valido (200)
+PATCH {{GameCatalog.API_HostAddress}}/api/jogo/1/desconto
+Content-Type: application/json
+
+{
+  "percentual": 25
+}
+
+### Aplicar desconto invalido - regra de negocio (400)
+PATCH {{GameCatalog.API_HostAddress}}/api/jogo/1/desconto
+Content-Type: application/json
+
+{
+  "percentual": 95
+}
+
+### Vincular plataforma no jogo (N:N)
+POST {{GameCatalog.API_HostAddress}}/api/jogo/1/plataforma
+Content-Type: application/json
+
+{
+  "nome": "Nintendo Switch"
+}
+
+### Deletar jogo
+DELETE {{GameCatalog.API_HostAddress}}/api/jogo/1
+
+### Deletar estudio com jogos vinculados (regra de negocio - 400)
+DELETE {{GameCatalog.API_HostAddress}}/api/estudio/1
