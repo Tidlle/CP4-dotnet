@@ -8,8 +8,8 @@ O projeto aplica os requisitos do checkpoint: arquitetura em camadas, Repository
 
 | Nome completo | RM |
 |---------------|----|
-| _preencher_   | _preencher_ |
-| _preencher_   | _preencher_ |
+| Eduardo Martins   | 562259 |
+| João Victor Alcântara | 562707 |
 
 ---
 
